@@ -1,0 +1,47 @@
+{
+  "name": "next-js-todo-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.4",
+    "@types/node": "20.5.0",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.13",
+    "next": "13.4.13",
+    "postcss": "8.4.27",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "github:eslint/eslintrc",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/experimental-utils": "^5.62.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "@typescript-eslint/scope-manager": "^6.3.0",
+    "@typescript-eslint/types": "^6.3.0",
+    "@typescript-eslint/typescript-estree": "^6.3.0",
+    "@typescript-eslint/visitor-keys": "^6.3.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-scope": "^7.2.2",
+    "eslint-utils": "^3.0.0",
+    "eslint-visitor-keys": "^3.4.3",
+    "prettier": "^3.0.1",
+    "prettier-plugin-tailwindcss": "^0.5.2"
+  }
+}
