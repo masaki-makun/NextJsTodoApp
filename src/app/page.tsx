@@ -201,12 +201,27 @@ const TodoApp: React.FC = () => {
           >
             Todo App
           </h1>
-          <IconButton
+          {/* <IconButton
             onClick={() => setMenuOpen(true)}
             className={`${darkMode ? 'text-white' : 'text-black'}`}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
+          <FormControlLabel
+                control={
+                  <MaterialUISwitch
+                    color='secondary'
+                    checked={darkMode}
+                    onChange={() => setDarkMode(!darkMode)}
+                    sx={{ m: 1 }}
+                    defaultChecked
+                  />
+                }
+                className={`m-0 ${
+                  darkMode ? 'text-white' : 'text-gray-800'
+                }`}
+                label=''
+              />
         </div>
 
         <form onSubmit={handleAddTask} className='flex mb-6 '>
@@ -252,7 +267,7 @@ const TodoApp: React.FC = () => {
                     darkMode ? 'hover:bg-red-600' : 'hover:bg-red-400'
                   }`}
                 >
-                  All Delete
+                  Delete
                 </button>
               </>
             )}
@@ -264,7 +279,7 @@ const TodoApp: React.FC = () => {
               {todos.map((todo, index) => (
                 <li
                   key={index}
-                  className={`flex items-center mb-2 shadow-md rounded-md p-2 transition hover:opacity-50 ${
+                  className={`flex items-center mb-2 mr-2 shadow-md rounded-md p-2 transition hover:opacity-50 ${
                     darkMode
                       ? 'bg-input-dark text-primary-text-dark'
                       : 'bg-input-light text-primary-text-light'
@@ -299,7 +314,7 @@ const TodoApp: React.FC = () => {
           </>
         )}
 
-        <Drawer
+        {/* <Drawer
           anchor='right'
           open={menuOpen}
           onClose={() => setMenuOpen(false)}
@@ -350,7 +365,7 @@ const TodoApp: React.FC = () => {
               />
             </div>
           </Box>
-        </Drawer>
+        </Drawer> */}
       </div>
     </div>
   );
