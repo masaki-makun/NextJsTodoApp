@@ -52,3 +52,12 @@ body {
   color: rgb(var(--foreground-rgb));
   background-color: #d7d8de;
 }
+
+.css-1j6hmqm-MuiSwitch-root{
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.css-1j6hmqm-MuiSwitch-root .MuiSwitch-switchBase.Mui-checked {
+    transform: translateX(29px);
+}
