@@ -1,21 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import Router, { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
-import Link from 'next/link';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import MenuIcon from '@mui/icons-material/Menu';
-import IconButton from '@mui/material/IconButton';
-import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import SignIn from '@/app/pages/components/SignIn/page';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -74,6 +65,7 @@ const TodoApp: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const deleteButtonDisabled = todos.some((todo) => todo.completed);
 
   useEffect(() => {
     if (darkMode) {
@@ -93,13 +85,13 @@ const TodoApp: React.FC = () => {
   };
 
   const handleDeleteTask = (index: number) => {
-    if (window.confirm('削除しますか？')) {
+    if (window.confirm('Delete checked tasks?')) {
       setTodos(todos.filter((_, i) => i !== index));
     }
   };
 
   const handleDeleteCompletedTasks = () => {
-    if (window.confirm('完了したタスクをすべて削除しますか？')) {
+    if (window.confirm('Delete all selected tasks?')) {
       setTodos(todos.filter((todo) => !todo.completed));
     }
   };
@@ -138,53 +130,54 @@ const TodoApp: React.FC = () => {
       }
     }, [todos]);
     return (
-      <>
-        <button
-          onClick={handleToggleTasks}
-          className={`text-white text-xs py-1 px-2 rounded mb-4 transition hover:opacity-50 shadow-md ${
-            darkMode
-              ? 'bg-primary-button-dark shadow-shadow-dark '
-              : 'bg-primary-button-light shadow-shadow-light'
-          } `}
-        >
-          {label}
-        </button>
-      </>
+      <div>
+        <div className='flex flex-row justify-between'>
+          <div className='flex flex-row gap-4'>
+            <Button
+              onClick={handleToggleTasks}
+              className={`text-white text-xs py-1 px-2 rounded mb-4 transition hover:opacity-50 shadow-md min-w-28 w-28 h-8 min-h-8 ${
+                darkMode
+                  ? 'bg-primary-button-dark shadow-shadow-dark '
+                  : 'bg-primary-button-light shadow-shadow-light'
+              } `}
+            >
+              {label}
+            </Button>
+            {deleteButtonDisabled && (
+              <Button
+                onClick={handleDeleteCompletedTasks}
+                className={`bg-red-500 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28 h-8 min-h-8${
+                  darkMode ? 'hover:bg-red-600' : 'hover:bg-red-400'
+                }`}
+              >
+                Delete
+              </Button>
+            )}
+            {!deleteButtonDisabled && (
+              <Button
+                onClick={handleDeleteCompletedTasks}
+                className={`bg-red-700 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28 opacity-50 h-8 min-h-8`}
+                disabled
+              >
+                Delete
+              </Button>
+            )}
+          </div>
+          <div>
+            <p
+              className={`mb-2 text-sm transition inline-block ${
+                darkMode ? 'text-white' : 'text-gray-800'
+              }`}
+            >
+              Checks Task: {completedCount}
+            </p>
+          </div>
+        </div>
+      </div>
     );
   };
 
   const completedCount = todos.filter((todo) => todo.completed).length;
-
-  const AllClearButton = () => {
-    const completedLength = todos.filter((todo) => todo.completed).length;
-    if (completedLength === 0 || completedLength < todos.length) {
-      return (
-        <>
-          <Button
-            onClick={handleAllCompletedTasks}
-            className={`text-white text-xs py-1 px-2 rounded mb-4 transition hover:opacity-50 ${
-              darkMode
-                ? 'bg-primary-button-dark shadow-shadow-dark '
-                : 'bg-primary-button-light shadow-shadow-light'
-            } `}
-          >
-            Check All
-          </Button>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <Button
-            className={`bg-input-light text-primary-text-light py-1 px-2 rounded mb-4 transition `}
-            onClick={handleAllNotCompletedTasks}
-          >
-            Uncheck All
-          </Button>
-        </>
-      );
-    }
-  };
 
   return (
     <div className='w-screen h-screen grid place-items-center overflow-hidden '>
@@ -201,27 +194,19 @@ const TodoApp: React.FC = () => {
           >
             Todo App
           </h1>
-          {/* <IconButton
-            onClick={() => setMenuOpen(true)}
-            className={`${darkMode ? 'text-white' : 'text-black'}`}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <FormControlLabel
-                control={
-                  <MaterialUISwitch
-                    color='secondary'
-                    checked={darkMode}
-                    onChange={() => setDarkMode(!darkMode)}
-                    sx={{ m: 1 }}
-                    defaultChecked
-                  />
-                }
-                className={`m-0 ${
-                  darkMode ? 'text-white' : 'text-gray-800'
-                }`}
-                label=''
+            control={
+              <MaterialUISwitch
+                color='secondary'
+                checked={darkMode}
+                onChange={() => setDarkMode(!darkMode)}
+                sx={{ m: 1 }}
+                defaultChecked
               />
+            }
+            className={`m-0 ${darkMode ? 'text-white' : 'text-gray-800'}`}
+            label=''
+          />
         </div>
 
         <form onSubmit={handleAddTask} className='flex mb-6 '>
@@ -230,7 +215,7 @@ const TodoApp: React.FC = () => {
             value={inputValue}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
             placeholder='Add a task...'
-            className={`flex-1 rounded-l border border-r-0 py-2 px-4 shadow-md ${
+            className={`flex-1 rounded-l border border-r-0 py-2 px-4 shadow-md border-transparent ${
               darkMode
                 ? 'bg-input-dark text-primary-text-dark shadow-shadow-dark'
                 : 'bg-input-light text-primary-text-light shadow-shadow-light'
@@ -254,22 +239,15 @@ const TodoApp: React.FC = () => {
           <>
             <HandleToggleAllTasks />
             {completedCount > 0 && (
-              <>
+              <div>
                 <p
-                  className={`mb-2 text-sm transition ${darkMode ? 'text-white' : 'text-gray-800'}`}
+                  className={`mb-2 text-sm transition inline-block ${
+                    darkMode ? 'text-white' : 'text-gray-800'
+                  }`}
                 >
                   Checks Task: {completedCount}
                 </p>
-
-                <button
-                  onClick={handleDeleteCompletedTasks}
-                  className={`bg-red-500 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md ${
-                    darkMode ? 'hover:bg-red-600' : 'hover:bg-red-400'
-                  }`}
-                >
-                  Delete
-                </button>
-              </>
+              </div>
             )}
             <ul
               className={`transition overflow-y-scroll max-h-96 ${
@@ -281,8 +259,8 @@ const TodoApp: React.FC = () => {
                   key={index}
                   className={`flex items-center mb-2 mr-2 shadow-md rounded-md p-2 transition hover:opacity-50 ${
                     darkMode
-                      ? 'bg-input-dark text-primary-text-dark'
-                      : 'bg-input-light text-primary-text-light'
+                      ? 'bg-input-dark text-secondary-text-dark'
+                      : 'bg-input-light text-secondary-text-light'
                   } ${todo.completed ? 'opacity-50' : ''}`}
                 >
                   <FormControlLabel
@@ -291,7 +269,7 @@ const TodoApp: React.FC = () => {
                         checked={todo.completed}
                         onChange={() => handleToggleTask(index)}
                         className={`${
-                          darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'
+                          darkMode ? 'text-secondary-text-dark' : 'text-secondary-text-light'
                         }`}
                       />
                     }
@@ -306,66 +284,17 @@ const TodoApp: React.FC = () => {
                         : 'hover:text-gray-400 text-primary-text-light'
                     }`}
                   >
-                    <DeleteIcon />
+                    <DeleteIcon
+                      className={`${
+                        darkMode ? 'text-secondary-text-dark' : 'text-secondary-text-light'
+                      }`}
+                    />
                   </button>
                 </li>
               ))}
             </ul>
           </>
         )}
-
-        {/* <Drawer
-          anchor='right'
-          open={menuOpen}
-          onClose={() => setMenuOpen(false)}
-          className='rounded-md max-h-[80%] min-h-[50%] h-min top-[25%]'
-        >
-          <Box
-            sx={{
-              width: '50vw',
-              height: '100%',
-              bgcolor: darkMode ? 'grey' : 'white',
-              color: darkMode ? 'white' : 'black',
-              p: 2,
-            }}
-            align='center'
-          >
-            <div className='flex flex-col gap-2 items-center'>
-              <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                <Avatar />
-              </Box>
-              <h2 className='text-xl font-bold mb-4'>UserName</h2>
-              <h3 className='text-lg font-bold mb-4'>Settings</h3>
-              <form className='flex mb-6 '>
-                <Link
-                  className={`text-white shadow-md inline-block text-center w-full rounded-md px-4 py-2 hover:bg-blue-800 transition ${
-                    darkMode
-                      ? 'bg-primary-button-dark shadow-shadow-dark '
-                      : 'bg-primary-button-light shadow-shadow-light'
-                  }`}
-                  href='pages/components/SignIn'
-                >
-                  Sign In
-                </Link>
-              </form>
-              <FormControlLabel
-                control={
-                  <MaterialUISwitch
-                    color='secondary'
-                    checked={darkMode}
-                    onChange={() => setDarkMode(!darkMode)}
-                    sx={{ m: 1 }}
-                    defaultChecked
-                  />
-                }
-                className={`m-0 transition bottom-4 fixed ${
-                  darkMode ? 'text-white' : 'text-gray-800'
-                }`}
-                label='Switch to dark mode'
-              />
-            </div>
-          </Box>
-        </Drawer> */}
       </div>
     </div>
   );
