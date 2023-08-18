@@ -64,7 +64,6 @@ const TodoApp: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [darkMode, setDarkMode] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const deleteButtonDisabled = todos.some((todo) => todo.completed);
 
   useEffect(() => {
@@ -150,9 +149,7 @@ const TodoApp: React.FC = () => {
               <Button
                 variant='contained'
                 onClick={handleDeleteCompletedTasks}
-                className={`bg-red-700 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28  h-8 min-h-8 hover:opacity-50 ${
-                  darkMode ? 'hover:bg-red-800' : 'hover:bg-red-400'
-                }`}
+                className={`bg-red-700 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28  h-8 min-h-8`}
                 disabled
               >
                 Delete
