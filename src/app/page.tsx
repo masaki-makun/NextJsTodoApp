@@ -96,15 +96,6 @@ const TodoApp: React.FC = () => {
     }
   };
 
-  const handleAllCompletedTasks = () => {
-    setTodos(todos.filter((todo) => (todo.completed = true)));
-  };
-
-  const handleAllNotCompletedTasks = () => {
-    setTodos(todos.filter((todo) => (todo.completed = false)));
-    console.log('handleAllNotCompletedTasks');
-  };
-
   const handleToggleTask = (index: number) => {
     setTodos(
       todos.map((todo, i) => (i === index ? { ...todo, completed: !todo.completed } : todo))
@@ -134,6 +125,7 @@ const TodoApp: React.FC = () => {
         <div className='flex flex-row justify-between'>
           <div className='flex flex-row gap-4'>
             <Button
+              variant='contained'
               onClick={handleToggleTasks}
               className={`text-white text-xs py-1 px-2 rounded mb-4 transition hover:opacity-50 shadow-md min-w-28 w-28 h-8 min-h-8 ${
                 darkMode
@@ -145,8 +137,9 @@ const TodoApp: React.FC = () => {
             </Button>
             {deleteButtonDisabled && (
               <Button
+                variant='contained'
                 onClick={handleDeleteCompletedTasks}
-                className={`bg-red-500 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28 h-8 min-h-8${
+                className={`bg-red-500 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28 h-8 min-h-8 hover:opacity-50 ${
                   darkMode ? 'hover:bg-red-600' : 'hover:bg-red-400'
                 }`}
               >
@@ -155,8 +148,11 @@ const TodoApp: React.FC = () => {
             )}
             {!deleteButtonDisabled && (
               <Button
+                variant='contained'
                 onClick={handleDeleteCompletedTasks}
-                className={`bg-red-700 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28 opacity-50 h-8 min-h-8`}
+                className={`bg-red-700 text-white text-xs py-1 px-2 rounded mb-4 transition shadow-md min-w-28 w-28  h-8 min-h-8 hover:opacity-50 ${
+                  darkMode ? 'hover:bg-red-800' : 'hover:bg-red-400'
+                }`}
                 disabled
               >
                 Delete
@@ -182,7 +178,7 @@ const TodoApp: React.FC = () => {
   return (
     <div className='w-screen h-screen grid place-items-center overflow-hidden '>
       <div
-        className={`max-w-lg min-w-[30rem] max-h-[80%] min-h-[50%] mx-auto px-8 py-12 text-white rounded-md shadow-md overflow-hidden ${
+        className={`max-w-lg min-w-[30rem] min-h-[42rem] max-h-[42rem] h-auto  mx-auto px-8 py-12 text-white rounded-md shadow-md overflow-hidden relative ${
           darkMode ? 'bg-card-dark' : 'bg-white'
         }`}
       >
@@ -238,61 +234,52 @@ const TodoApp: React.FC = () => {
         ) : (
           <>
             <HandleToggleAllTasks />
-            {completedCount > 0 && (
-              <div>
-                <p
-                  className={`mb-2 text-sm transition inline-block ${
-                    darkMode ? 'text-white' : 'text-gray-800'
-                  }`}
-                >
-                  Checks Task: {completedCount}
-                </p>
-              </div>
-            )}
-            <ul
-              className={`transition overflow-y-scroll max-h-96 ${
-                darkMode ? 'scrollbar-dark' : 'scrollbar-light'
-              }`}
-            >
-              {todos.map((todo, index) => (
-                <li
-                  key={index}
-                  className={`flex items-center mb-2 mr-2 shadow-md rounded-md p-2 transition hover:opacity-50 ${
-                    darkMode
-                      ? 'bg-input-dark text-secondary-text-dark'
-                      : 'bg-input-light text-secondary-text-light'
-                  } ${todo.completed ? 'opacity-50' : ''}`}
-                >
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={todo.completed}
-                        onChange={() => handleToggleTask(index)}
+            <div className='relative w-full h-auto'>
+              <ul
+                className={`transition overflow-y-scroll max-h-96 w-full  ${
+                  darkMode ? 'scrollbar-dark' : 'scrollbar-light'
+                }`}
+              >
+                {todos.map((todo, index) => (
+                  <li
+                    key={index}
+                    className={`flex items-center mb-2 mr-2 shadow-md rounded-md p-2 transition hover:opacity-50 ${
+                      darkMode
+                        ? 'bg-input-dark text-secondary-text-dark'
+                        : 'bg-input-light text-secondary-text-light'
+                    } ${todo.completed ? 'opacity-50' : ''}`}
+                  >
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={todo.completed}
+                          onChange={() => handleToggleTask(index)}
+                          className={`${
+                            darkMode ? 'text-secondary-text-dark' : 'text-secondary-text-light'
+                          }`}
+                        />
+                      }
+                      label={todo.text}
+                      className={`flex-1 ${todo.completed ? 'line-through' : ''}`}
+                    />
+                    <button
+                      onClick={() => handleDeleteTask(index)}
+                      className={`bg-none p-1 ${
+                        darkMode
+                          ? 'hover:text-gray-600 text-primary-text-dark'
+                          : 'hover:text-gray-400 text-primary-text-light'
+                      }`}
+                    >
+                      <DeleteIcon
                         className={`${
                           darkMode ? 'text-secondary-text-dark' : 'text-secondary-text-light'
                         }`}
                       />
-                    }
-                    label={todo.text}
-                    className={`flex-1 ${todo.completed ? 'line-through' : ''}`}
-                  />
-                  <button
-                    onClick={() => handleDeleteTask(index)}
-                    className={`bg-none p-1 ${
-                      darkMode
-                        ? 'hover:text-gray-600 text-primary-text-dark'
-                        : 'hover:text-gray-400 text-primary-text-light'
-                    }`}
-                  >
-                    <DeleteIcon
-                      className={`${
-                        darkMode ? 'text-secondary-text-dark' : 'text-secondary-text-light'
-                      }`}
-                    />
-                  </button>
-                </li>
-              ))}
-            </ul>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </>
         )}
       </div>
