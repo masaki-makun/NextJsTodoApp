@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 
 type Todo = {
   text: string;
@@ -25,7 +24,6 @@ const TodoFilter: React.FC<{
 }) => {
   return (
     <div className='flex flex-row justify-between items-center mb-6'>
-      {/* タスクが0の場合の表示 */}
       {todos.length === 0 && (
         <div>
           <p
@@ -36,42 +34,43 @@ const TodoFilter: React.FC<{
         </div>
       )}
 
-      {/* タスクが1以上の場合の表示 */}
       {todos.length > 0 && (
         <div className='flex flex-row gap-4 items-center'>
-          <Button
-            variant='contained'
+          <button
             onClick={handleToggleAllTasks}
-            className={`text-white text-xs py-1 px-2 rounded transition hover:opacity-50 shadow-md min-w-28 w-28 h-8 min-h-8 ${
+            className={`text-white text-xs py-1 px-2 rounded
+            hover:opacity-50 shadow-md min-w-28 w-28 h-8 min-h-8 ${
               darkMode
                 ? 'bg-primary-button-dark shadow-shadow-dark '
                 : 'bg-primary-button-light shadow-shadow-light'
             } `}
           >
             {label}
-          </Button>
+          </button>
           {!deleteButtonIsDisabled && (
-            <Button
-              variant='contained'
+            <button
               onClick={handleDeleteCompletedTasks}
-              className={`bg-red-700 text-primary-text-dark text-xs py-1 px-2 rounded transition shadow-md min-w-28 w-28  h-8 min-h-8 ${
+              className={`bg-red-700 text-primary-text-dark text-xs
+              py-1 px-2 rounded shadow-md min-w-28 w-28  h-8 min-h-8 ${
                 darkMode ? 'hover:bg-red-800' : 'hover:bg-red-400'
               }`}
             >
               Delete
-            </Button>
+            </button>
           )}
           {deleteButtonIsDisabled && (
-            <Button
-              variant='contained'
+            <button
               onClick={handleDeleteCompletedTasks}
-              className={`text-xs py-1 px-2 rounded transition shadow-md min-w-28 w-28  h-8 min-h-8 ${
-                darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'
+              className={`text-xs py-1 px-2 rounded
+              shadow-md min-w-28 w-28  h-8 min-h-8 bg-input-dark opacity-50 ${
+                darkMode
+                  ? 'text-primary-text-dark bg-input-dark'
+                  : 'text-primary-text-light bg-input-light'
               }`}
               disabled
             >
               Delete
-            </Button>
+            </button>
           )}
         </div>
       )}
@@ -83,10 +82,8 @@ const TodoFilter: React.FC<{
         >
           Checks Task:{' '}
           <span
-            className={`block rounded-full p-2 w-8 h-8 text-center text-primary-text-dark ${
-              darkMode
-                ? 'bg-primary-button-dark shadow-shadow-dark '
-                : 'bg-primary-button-light shadow-shadow-light'
+            className={`block rounded-full p-2 w-8 h-8 text-center text-primary-text-dark font-bold ${
+              darkMode ? 'bg-primary-button-dark' : 'bg-primary-button-light'
             }`}
           >
             {completedCount}

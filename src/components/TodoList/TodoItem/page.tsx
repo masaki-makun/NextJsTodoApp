@@ -17,9 +17,8 @@ const TodoItem: React.FC<{
 }> = ({ todo, onToggle, onDelete, darkMode }) => {
   return (
     <li
-      className={`flex items-center justify-between mb-2 mr-2 shadow-md rounded-md p-2 hover:opacity-50 ${
-        todo.completed ? 'opacity-50' : ''
-      } ${
+      className={`flex items-center justify-between
+      mb-2 mr-2 shadow-md rounded-md p-2 hover:opacity-50 ${todo.completed ? 'opacity-50' : ''} ${
         darkMode ? 'text-primary-text-dark bg-input-dark' : 'text-primary-text-light bg-input-light'
       }`}
     >
@@ -28,15 +27,15 @@ const TodoItem: React.FC<{
           <Checkbox
             checked={todo.completed}
             onChange={onToggle}
-            className={`${todo.completed ? 'line-through ' : ''} ${
-              darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'
-            }`}
+            className={`${darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'}`}
           />
         }
         label={todo.text}
-        className={`flex-1 ml-[-4px]  ${todo.completed ? 'line-through' : ''}`}
+        className={`flex-1 ml-[-4px]  ${todo.completed ? 'line-through' : ''} ${
+          darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'
+        }`}
       />
-      <Button onClick={onDelete} className={`bg-none p-1 justify-end`}>
+      <Button onClick={onDelete} className='bg-none p-1 justify-end'>
         <DeleteIcon
           className={`${darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'}`}
         />

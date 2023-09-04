@@ -14,7 +14,7 @@ const TodoList: React.FC<{
 }> = ({ todos, handleToggleTask, handleDeleteTask, darkMode }) => {
   return (
     <div className='relative w-full h-auto'>
-      <ul className={`transition overflow-y-scroll max-h-96 w-full  `}>
+      <ul className='overflow-y-scroll max-h-96 w-full'>
         {todos.map((todo, index) => (
           <TodoItem
             key={index}
