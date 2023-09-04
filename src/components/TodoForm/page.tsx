@@ -13,7 +13,8 @@ const TodoForm: React.FC<{
         value={inputValue}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
         placeholder='Add a task...'
-        className={`flex-1 rounded-l border border-r-0 py-2 px-4 shadow-md border-transparent ${
+        className={`flex-1 rounded-l border border-r-0
+        py-2 px-4 shadow-md border-transparent ${
           darkMode
             ? 'bg-input-dark text-primary-text-dark shadow-shadow-dark'
             : 'bg-input-light text-primary-text-light shadow-shadow-light'
@@ -21,7 +22,8 @@ const TodoForm: React.FC<{
       />
       <button
         type='submit'
-        className={`rounded-r py-2 px-4 shadow-md hover:opacity-50 text-primary-text-dark ${
+        className={`rounded-r py-2 px-4 shadow-md
+        hover:opacity-50 text-primary-text-dark ${
           darkMode
             ? 'bg-primary-button-dark shadow-shadow-dark '
             : 'bg-primary-button-light shadow-shadow-light'

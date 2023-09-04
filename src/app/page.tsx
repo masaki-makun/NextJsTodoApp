@@ -6,20 +6,29 @@ import TodoForm from '@/app/pages/components/TodoForm/page';
 import TodoFilter from '@/app/pages/components/TodoFilter/page';
 import TodoList from '@/app/pages/components/TodoList/page';
 
-//Todoの型宣言
 type Todo = {
   text: string;
   completed: boolean;
 };
 
-// メインコンポーネント
 const TodoApp: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const [darkMode, setDarkMode] = useState(false);
   const deleteButtonIsDisabled = !todos.some((todo) => todo.completed);
   const initialLabel = 'Check All';
   const [label, setLabel] = useState<string>(initialLabel);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem('darkMode') === 'on' ? true : false
+  );
+
+  const handleDarkModeOn = () => {
+    localStorage.setItem('darkMode', 'on');
+    setDarkMode(true);
+  };
+  const handleDarkModeOff = () => {
+    localStorage.setItem('darkMode', 'off');
+    setDarkMode(false);
+  };
 
   // BGのダークモード切り替え処理
   useEffect(() => {
@@ -70,38 +79,40 @@ const TodoApp: React.FC = () => {
   const completedCount = todos.filter((todo) => todo.completed).length;
 
   return (
-    <div className='w-screen h-screen grid place-items-center overflow-hidden '>
-      <div
-        className={`max-w-lg min-w-[30rem] min-h-[43rem] max-h-[43rem] h-auto
+    <>
+      <div className='w-screen h-screen grid place-items-center overflow-hidden '>
+        <div
+          className={`max-w-lg min-w-[30rem] min-h-[43rem] max-h-[43rem] h-auto
         mx-auto px-8 py-12 text-white rounded-md shadow-md overflow-hidden relative ${
           darkMode ? 'bg-card-dark' : 'bg-white'
         }`}
-      >
-        <NavigationHeader darkMode={darkMode} setDarkMode={() => setDarkMode(!darkMode)} />
-        <TodoForm
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          handleAddTask={handleAddTask}
-          darkMode={darkMode}
-        />
-        {}
-        <TodoFilter
-          completedCount={completedCount}
-          handleDeleteCompletedTasks={handleDeleteCompletedTasks}
-          handleToggleAllTasks={handleToggleAllTasks}
-          darkMode={darkMode}
-          deleteButtonIsDisabled={deleteButtonIsDisabled}
-          label={label}
-          todos={todos}
-        />
-        <TodoList
-          todos={todos}
-          handleToggleTask={handleToggleTask}
-          handleDeleteTask={handleDeleteTask}
-          darkMode={darkMode}
-        />
+        >
+          <NavigationHeader darkMode={darkMode} setDarkMode={() => setDarkMode(!darkMode)} />
+          <TodoForm
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            handleAddTask={handleAddTask}
+            darkMode={darkMode}
+          />
+
+          <TodoFilter
+            completedCount={completedCount}
+            handleDeleteCompletedTasks={handleDeleteCompletedTasks}
+            handleToggleAllTasks={handleToggleAllTasks}
+            darkMode={darkMode}
+            deleteButtonIsDisabled={deleteButtonIsDisabled}
+            label={label}
+            todos={todos}
+          />
+          <TodoList
+            todos={todos}
+            handleToggleTask={handleToggleTask}
+            handleDeleteTask={handleDeleteTask}
+            darkMode={darkMode}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
