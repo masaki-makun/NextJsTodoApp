@@ -51,24 +51,6 @@ body {
   background-color: #d7d8de;
 }
 
-.css-j204z7-MuiFormControlLabel-root {
-  margin-right: 0 !important;
-}
-
-.css-jzcd7z-MuiFormControlLabel-root{
-  margin-right: 0 !important;
-}
-
-.css-c8g3v0-MuiSwitch-root .MuiSwitch-switchBase.Mui-checked {
-  transform: translateX(29px)!important;
-}
-
-.css-1j6hmqm-MuiSwitch-root{
-  margin-right: 0;
-  padding-right: 0;
-}
-
-
 /* ライトモード */
 .css-ntjas1-MuiButtonBase-root-MuiButton-root {
   padding:0.25rem 0.5rem !important;
@@ -88,11 +70,3 @@ body {
 .css-1dbvjsp-MuiButtonBase-root-MuiButton-root-disabled{
     background-color: rgb(185 28 28 / var(--tw-bg-opacity))!important;
 }
-
-
-
-
-
-
-
-

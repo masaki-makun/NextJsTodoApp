@@ -60,7 +60,6 @@ const TodoFilter: React.FC<{
           )}
           {deleteButtonIsDisabled && (
             <button
-              onClick={handleDeleteCompletedTasks}
               className={`text-xs py-1 px-2 rounded
               shadow-md min-w-28 w-28  h-8 min-h-8 bg-input-dark opacity-50 ${
                 darkMode
@@ -82,7 +81,8 @@ const TodoFilter: React.FC<{
         >
           Checks Task:{' '}
           <span
-            className={`block rounded-full p-2 w-8 h-8 text-center text-primary-text-dark font-bold ${
+            className={`block rounded-full p-2 w-8 h-8 text-center
+            text-primary-text-dark font-bold ${
               darkMode ? 'bg-primary-button-dark' : 'bg-primary-button-light'
             }`}
           >

@@ -17,18 +17,7 @@ const TodoApp: React.FC = () => {
   const deleteButtonIsDisabled = !todos.some((todo) => todo.completed);
   const initialLabel = 'Check All';
   const [label, setLabel] = useState<string>(initialLabel);
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem('darkMode') === 'on' ? true : false
-  );
-
-  const handleDarkModeOn = () => {
-    localStorage.setItem('darkMode', 'on');
-    setDarkMode(true);
-  };
-  const handleDarkModeOff = () => {
-    localStorage.setItem('darkMode', 'off');
-    setDarkMode(false);
-  };
+  const [darkMode, setDarkMode] = useState(false);
 
   // BGのダークモード切り替え処理
   useEffect(() => {
@@ -40,6 +29,21 @@ const TodoApp: React.FC = () => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
 
+  // Label切り替え処理
+  useEffect(() => {
+    if (todos.every((todo) => todo.completed)) {
+      setLabel('Uncheck All');
+    } else if (
+      todos.filter((todo) => !todo.completed).length === 0 ||
+      todos.length <= todos.filter((todo) => !todo.completed).length
+    ) {
+      setLabel(initialLabel);
+    }
+    if (todos.some((todo) => !todo.completed)) {
+      setLabel(initialLabel);
+    }
+  }, [todos]);
+
   const handleAddTask = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputValue) {
@@ -48,15 +52,15 @@ const TodoApp: React.FC = () => {
     }
   };
 
+  const handleToggleTask = (index: number) => {
+    setTodos(
+      todos.map((todo, i) => (i === index ? { ...todo, completed: !todo.completed } : todo))
+    );
+  };
+
   const handleDeleteTask = (index: number) => {
     if (window.confirm('Delete checked tasks?')) {
       setTodos(todos.filter((_, i) => i != index));
-    }
-  };
-
-  const handleDeleteCompletedTasks = () => {
-    if (window.confirm('Delete all selected tasks?')) {
-      setTodos(todos.filter((todo) => !todo.completed));
     }
   };
 
@@ -70,10 +74,10 @@ const TodoApp: React.FC = () => {
     }
   };
 
-  const handleToggleTask = (index: number) => {
-    setTodos(
-      todos.map((todo, i) => (i === index ? { ...todo, completed: !todo.completed } : todo))
-    );
+  const handleDeleteCompletedTasks = () => {
+    if (window.confirm('Delete all selected tasks?')) {
+      setTodos(todos.filter((todo) => !todo.completed));
+    }
   };
 
   const completedCount = todos.filter((todo) => todo.completed).length;

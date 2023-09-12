@@ -6,14 +6,19 @@ import Switch from '@mui/material/Switch';
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
-  padding: 7,
+  margin: 0,
+  paddingTop: 8,
+  paddingRight: 0,
+  paddingBottom: 8,
+  paddingLeft: 8,
   '& .MuiSwitch-switchBase': {
     margin: 1,
     padding: 0,
     transform: 'translateX(6px)',
+    backgroundColor: '#3872ff',
     '&.Mui-checked': {
       color: '#fff',
-      transform: 'translateX(22px)',
+      transform: 'translateX(29px)',
       '& .MuiSwitch-thumb:before': {
         backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
           '#fff'
@@ -23,10 +28,13 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         opacity: 1,
         backgroundColor: '#302f32',
       },
+      '& .MuiSwitch-thumb': {
+        backgroundColor: '#5985ff',
+      },
     },
   },
   '& .MuiSwitch-thumb': {
-    backgroundColor: theme.palette.mode === 'dark' ? '#5985ff' : '#3872ff',
+    backgroundColor: '#3872ff',
     width: 32,
     height: 32,
     '&:before': {
@@ -69,10 +77,11 @@ const NavigationHeader: React.FC<{
             color='secondary'
             checked={darkMode}
             onChange={() => setDarkMode(!darkMode)}
-            sx={{ m: 0, pr: 0 }}
             defaultChecked
+            className={`${darkMode ? 'text-primary-button-dark' : 'text-primary-button-light'}`}
           />
         }
+        sx={{ m: 0 }}
         className={`m-0 ${darkMode ? 'text-white' : 'text-gray-800'}`}
         label=''
       />
