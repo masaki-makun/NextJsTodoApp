@@ -31,7 +31,7 @@ const TodoItem: React.FC<{
           />
         }
         label={todo.text}
-        className={`flex-1 ml-[-4px]  ${todo.completed ? 'line-through' : ''} ${
+        className={`flex-1 ml-1  ${todo.completed ? 'line-through' : ''} ${
           darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'
         }`}
       />
