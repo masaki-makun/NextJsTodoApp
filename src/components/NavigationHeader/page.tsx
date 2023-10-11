@@ -63,7 +63,7 @@ const NavigationHeader: React.FC<{
   setDarkMode: (darkMode: boolean) => void;
 }> = ({ darkMode, setDarkMode }) => {
   return (
-    <div className='flex justify-between items-center mb-8'>
+    <div className='mb-8 flex items-center justify-between'>
       <h1
         className={`text-2xl font-bold ${
           darkMode ? 'text-primary-text-dark' : 'text-primary-text-light'

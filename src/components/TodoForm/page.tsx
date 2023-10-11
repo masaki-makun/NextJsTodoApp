@@ -7,26 +7,26 @@ const TodoForm: React.FC<{
   darkMode: boolean;
 }> = ({ inputValue, setInputValue, handleAddTask, darkMode }) => {
   return (
-    <form onSubmit={handleAddTask} className='flex mb-8 '>
+    <form onSubmit={handleAddTask} className='mb-8 flex '>
       <input
         type='text'
         value={inputValue}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
         placeholder='Add a task...'
         className={`flex-1 rounded-l border border-r-0
-        py-2 px-4 shadow-md border-transparent ${
+        border-transparent px-4 py-2 shadow-md ${
           darkMode
-            ? 'bg-input-dark text-primary-text-dark shadow-shadow-dark'
-            : 'bg-input-light text-primary-text-light shadow-shadow-light'
+            ? 'shadow-shadow-dark bg-input-dark text-primary-text-dark'
+            : 'shadow-shadow-light bg-input-light text-primary-text-light'
         }`}
       />
       <button
         type='submit'
-        className={`rounded-r py-2 px-4 shadow-md
-        hover:opacity-50 text-primary-text-dark ${
+        className={`rounded-r px-4 py-2 text-primary-text-dark
+        shadow-md hover:opacity-50 ${
           darkMode
-            ? 'bg-primary-button-dark shadow-shadow-dark '
-            : 'bg-primary-button-light shadow-shadow-light'
+            ? 'shadow-shadow-dark bg-primary-button-dark '
+            : 'shadow-shadow-light bg-primary-button-light'
         }`}
       >
         Add

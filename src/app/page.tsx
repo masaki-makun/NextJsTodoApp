@@ -18,6 +18,7 @@ const TodoApp: React.FC = () => {
   const initialLabel = 'Check All';
   const [label, setLabel] = useState<string>(initialLabel);
   const [darkMode, setDarkMode] = useState(false);
+  const checkIconFlag = !todos.every((todo) => todo.completed);
 
   // BGのダークモード切り替え処理
   useEffect(() => {
@@ -84,10 +85,10 @@ const TodoApp: React.FC = () => {
 
   return (
     <>
-      <div className='w-screen h-screen grid place-items-center overflow-hidden '>
+      <div className='grid h-screen w-screen place-items-center overflow-hidden '>
         <div
-          className={`max-w-lg min-w-[30rem] min-h-[43rem] max-h-[43rem] h-auto
-        mx-auto px-8 py-12 text-white rounded-md shadow-md overflow-hidden relative ${
+          className={`relative mx-auto h-auto max-h-[43rem] min-h-[43rem] w-full max-w-[85%]
+        overflow-hidden rounded-md px-8 py-12 text-white shadow-md md:min-w-[30rem] md:max-w-lg ${
           darkMode ? 'bg-card-dark' : 'bg-white'
         }`}
         >
@@ -107,6 +108,7 @@ const TodoApp: React.FC = () => {
             deleteButtonIsDisabled={deleteButtonIsDisabled}
             label={label}
             todos={todos}
+            checkIconFlag={checkIconFlag}
           />
           <TodoList
             todos={todos}
