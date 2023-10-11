@@ -1,4 +1,7 @@
 import React from 'react';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type Todo = {
   text: string;
@@ -13,6 +16,7 @@ const TodoFilter: React.FC<{
   deleteButtonIsDisabled: boolean;
   label: string;
   todos: Todo[];
+  checkIconFlag: boolean;
 }> = ({
   completedCount,
   handleDeleteCompletedTasks,
@@ -21,9 +25,10 @@ const TodoFilter: React.FC<{
   deleteButtonIsDisabled,
   label,
   todos,
+  checkIconFlag,
 }) => {
   return (
-    <div className='flex flex-row justify-between items-center mb-6'>
+    <div className='mb-6 flex flex-row items-center justify-between'>
       {todos.length === 0 && (
         <div>
           <p
@@ -35,42 +40,49 @@ const TodoFilter: React.FC<{
       )}
 
       {todos.length > 0 && (
-        <div className='flex flex-row gap-4 items-center'>
-          <button
-            onClick={handleToggleAllTasks}
-            className={`text-white text-xs py-1 px-2 rounded
-            hover:opacity-50 shadow-md min-w-28 w-28 h-8 min-h-8 ${
-              darkMode
-                ? 'bg-primary-button-dark shadow-shadow-dark '
-                : 'bg-primary-button-light shadow-shadow-light'
-            } `}
-          >
-            {label}
-          </button>
-          {!deleteButtonIsDisabled && (
+        <div className='flex flex-row items-center gap-4'>
+          <div className='flex flex-row items-center gap-4'>
             <button
-              onClick={handleDeleteCompletedTasks}
-              className={`bg-red-700 text-primary-text-dark text-xs
-              py-1 px-2 rounded shadow-md min-w-28 w-28  h-8 min-h-8 ${
-                darkMode ? 'hover:bg-red-800' : 'hover:bg-red-400'
-              }`}
+              title='btn'
+              className='shadow-shadow-light md:min-w-28 md:min-h-8 rounded-full bg-primary-button-light px-1 py-1 text-xs text-white  shadow-md hover:opacity-50 md:h-8 md:w-28 md:rounded md:px-2'
+              onClick={handleToggleAllTasks}
             >
-              Delete
+              {!checkIconFlag ? (
+                <CheckCircleOutlineIcon className='block md:!hidden' />
+              ) : (
+                <CheckCircleIcon className='block md:!hidden' />
+              )}
+              <p className='hidden md:block'>{label}</p>
             </button>
-          )}
-          {deleteButtonIsDisabled && (
-            <button
-              className={`text-xs py-1 px-2 rounded
-              shadow-md min-w-28 w-28  h-8 min-h-8 bg-input-dark opacity-50 ${
-                darkMode
-                  ? 'text-primary-text-dark bg-input-dark'
-                  : 'text-primary-text-light bg-input-light'
-              }`}
-              disabled
-            >
-              Delete
-            </button>
-          )}
+
+            {!deleteButtonIsDisabled && (
+              <button
+                title='btn'
+                onClick={handleDeleteCompletedTasks}
+                className={`md:min-w-28 md:min-h-8 rounded-full bg-input-light bg-red-700 px-1 py-1 text-xs text-primary-text-dark  shadow-md md:h-8 md:w-28 md:rounded md:px-2 ${
+                  darkMode ? 'hover:bg-red-800' : 'hover:bg-red-400'
+                }`}
+              >
+                <DeleteIcon className='block md:!hidden' />
+                <p className='hidden md:block'>Delete</p>
+              </button>
+            )}
+            {deleteButtonIsDisabled && (
+              <button
+                title='btn'
+                onClick={handleDeleteCompletedTasks}
+                className={`md:min-w-28 md:min-h-8 appearance-none rounded-full bg-input-light px-1 py-1 text-xs text-primary-text-dark text-primary-text-light opacity-50 shadow-md md:h-8 md:w-28 md:rounded md:px-2 ${
+                  darkMode
+                    ? 'bg-input-dark text-primary-text-dark'
+                    : 'bg-input-light text-primary-text-light'
+                }`}
+                disabled
+              >
+                <DeleteIcon className='block md:!hidden' />
+                <p className='hidden md:block'>Delete</p>
+              </button>
+            )}
+          </div>
         </div>
       )}
       <div className='flex items-center justify-center'>
@@ -81,8 +93,8 @@ const TodoFilter: React.FC<{
         >
           Checks Task:{' '}
           <span
-            className={`block rounded-full p-2 w-8 h-8 text-center
-            text-primary-text-dark font-bold ${
+            className={`block h-8 w-8 rounded-full p-2 text-center
+            font-bold text-primary-text-dark ${
               darkMode ? 'bg-primary-button-dark' : 'bg-primary-button-light'
             }`}
           >
