@@ -12,7 +12,7 @@ module.exports = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       backgroundColor: {
-        dark: '#5c6269',
+        "dark": '#5c6269',
         'card-dark': '#3d3c3f',
         'input-light': '#eaecef',
         'input-dark': '#302f32',
