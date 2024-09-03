@@ -20,6 +20,7 @@ const TodoApp: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
   const checkIconFlag = !todos.every((todo) => todo.completed);
 
+
   // BGのダークモード切り替え処理
   useEffect(() => {
     if (darkMode) {
@@ -123,3 +124,4 @@ const TodoApp: React.FC = () => {
 };
 
 export default TodoApp;
+
